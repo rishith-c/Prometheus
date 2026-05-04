@@ -1,284 +1,224 @@
 # Autonomous GPS Quadcopter
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/badge/build-in%20progress-yellow)]()
-[![ArduPilot](https://img.shields.io/badge/ArduPilot-4.6.3-blue)]()
+A 1.85kg quadcopter built from scratch for GPS waypoint navigation, position hold, and autonomous missions controlled from a Raspberry Pi.
 
-A 1.85kg autonomous quadcopter platform built for GPS waypoint navigation, position hold, return-to-launch, and Raspberry Pi MAVLink control.
+## What This Is
 
-## Project Overview
+This project documents a full autonomous drone build, from the carbon fiber frame and electronics all the way through the Python flight control software. The drone runs ArduCopter firmware on a Matek F405-Wing V2 flight controller, with a Raspberry Pi 4 as a companion computer that sends MAVLink commands over UART. You define GPS waypoints in Python, and the drone flies them autonomously.
 
-This repo contains everything needed to build and program an autonomous quadcopter from scratch -- hardware specs, wiring guides, ArduCopter configuration, and Python flight control software.
+The repo contains everything needed to reproduce this build: the complete parts list, wiring diagrams, frame assembly instructions, flight controller parameters, sensor calibration procedures, safety protocols, and the Python software for controlling the drone and monitoring telemetry.
 
-### Capabilities
+**Total hardware cost: roughly $250 to $400 depending on where you source parts.**
 
-- GPS waypoint navigation via DroneKit-Python
-- MAVLink control from Raspberry Pi 4 companion computer
-- GPS position hold and altitude hold
-- Automatic return-to-launch on low battery or signal loss
-- 12-15 minute hover flight time on 3000mAh 4S LiPo
-- 1.89:1 thrust-to-weight ratio
-- Computer vision ready (future expansion)
+Built by [Rishith Chennupati](https://github.com/Cyntax1).
 
 ### Project Status
 
-**In Development**
+This project is in active development.
 
-Completed:
-- ArduCopter V4.6.3 firmware flashed
-- ESC and motor configuration
-- GPS module connected and tested
-- Frame design finalized
+**Done:** ArduCopter V4.6.3 firmware flashed, ESC and motor configuration, GPS module connected and tested, frame design finalized.
 
-In Progress:
-- Sensor calibrations
-- Frame assembly
-- Raspberry Pi MAVLink integration
+**In progress:** Sensor calibrations, frame assembly, Raspberry Pi MAVLink integration.
 
-Upcoming:
-- First test flight
-- Autonomous mission testing
-- Computer vision integration
+**Upcoming:** First test flight, autonomous mission testing, computer vision integration.
 
----
+## How It Works
 
-## Technical Specifications
+The system has three layers:
+
+1. **Flight controller** (Matek F405-Wing V2): Runs ArduCopter firmware. Handles all the real-time flight stabilization using data from the onboard IMU, barometer, GPS, and compass. It controls the four ESC/motor combos through DShot600 protocol at high speed.
+
+2. **Companion computer** (Raspberry Pi 4): Runs the Python software. Connects to the flight controller over UART at 921600 baud using the MAVLink protocol via DroneKit. This is where you write mission logic, like "take off to 10 meters, fly to these three GPS coordinates, then return home."
+
+3. **Ground station** (optional): QGroundControl or Mission Planner on your laptop for monitoring, parameter tuning, and manual override.
+
+The reason for this split is that the flight controller needs to run a tight real-time control loop (hundreds of times per second) for stability, while the Raspberry Pi handles higher-level decisions like waypoint sequencing and telemetry logging that do not need real-time guarantees.
 
 ### Flight Performance
 
 | Spec | Value |
 |------|-------|
-| Total Weight | 1.85 kg (all-up) |
-| Thrust-to-Weight | 1.89:1 |
-| Flight Time (Hover) | 12-15 minutes |
-| Flight Time (Aggressive) | 8-10 minutes |
-| Max Thrust | 3500g (875g per motor) |
-| Frame Size | 450mm diagonal |
-| Propeller Size | 11x7 inches |
-| GPS Accuracy | +/- 2-3 meters |
-| Wind Resistance | Stable in 5-10 mph |
+| Total weight | 1.85 kg (all-up) |
+| Thrust-to-weight ratio | 1.89:1 |
+| Hover flight time | 12 to 15 minutes |
+| Aggressive flight time | 8 to 10 minutes |
+| Max thrust | 3500g (875g per motor) |
+| Frame size | 450mm diagonal |
+| Propellers | 11x7 inches |
+| GPS accuracy | 2 to 3 meters |
 
-### Core Components
+## Hardware You Need
 
-| Component | Model |
-|-----------|-------|
-| Flight Controller | Matek F405-Wing V2 (STM32 F405, 168MHz) |
-| ESC | Diatone Mamba F40 4-in-1 (40A, Dshot600) |
-| Motors | D2830-12 Brushless x4 (~1000-1200 KV) |
-| Battery | 3000mAh 4S LiPo (14.8V, 60C) |
-| GPS | Beitian BN-880 (Ublox M8N + compass) |
-| Companion Computer | Raspberry Pi 4 (2-4GB) |
-| Frame | Custom carbon fiber rod (450mm, 10x 18mm rods) |
-| Firmware | ArduCopter V4.6.3 |
+| Component | Model | Approx. Cost |
+|-----------|-------|-------------|
+| Flight controller | Matek F405-Wing V2 (STM32 F405, 168MHz) | ~$40 |
+| ESC | Diatone Mamba F40 4-in-1 (40A, DShot600) | ~$45 |
+| Motors | D2830-12 Brushless x4 (1000 to 1200 KV) | ~$60 |
+| Battery | 3000mAh 4S LiPo (14.8V, 60C) | ~$35 |
+| GPS module | Beitian BN-880 (Ublox M8N with compass) | ~$20 |
+| Companion computer | Raspberry Pi 4 (2 to 4 GB) | ~$35 |
+| Frame | Custom carbon fiber rod (450mm, 10x 18mm rods) | ~$25 |
+| Propellers | 11x7 inch x4 | ~$10 |
 
-**Total Cost:** ~$250-$400 USD
+See [hardware/bill-of-materials.md](hardware/bill-of-materials.md) for the complete parts list with links and exact costs.
 
----
-
-## Repository Structure
+## Project Structure
 
 ```
 Autonomous-Drone/
-├── README.md
-├── LICENSE
 ├── config/
-│   └── arducopter-params.param    # Flight controller parameters
+│   └── arducopter-params.param      # Flight controller parameter file
 ├── docs/
-│   ├── build-guide.md             # Step-by-step assembly
-│   ├── hardware-specs.md          # Detailed component specs
-│   ├── flight-controller-setup.md # ArduCopter configuration
-│   ├── mavlink-setup.md           # Raspberry Pi integration
-│   ├── calibration-guide.md       # Sensor calibration procedures
-│   ├── troubleshooting.md         # Common issues and fixes
-│   └── safety.md                  # Safety protocols
+│   ├── build-guide.md               # Step-by-step assembly
+│   ├── hardware-specs.md            # Detailed component specs
+│   ├── flight-controller-setup.md   # ArduCopter configuration
+│   ├── mavlink-setup.md             # Raspberry Pi UART wiring and setup
+│   ├── calibration-guide.md         # Accelerometer, compass, ESC calibration
+│   ├── troubleshooting.md           # Common issues and fixes
+│   └── safety.md                    # Safety protocols and checklists
 ├── hardware/
-│   ├── bill-of-materials.md       # Full parts list with costs
+│   ├── bill-of-materials.md         # Full parts list with costs
 │   ├── frame/
-│   │   └── frame-assembly.md      # Frame build instructions
+│   │   └── frame-assembly.md        # Frame construction
 │   └── wiring-diagrams/
-│       └── wiring-guide.md        # Complete wiring reference
+│       └── wiring-guide.md          # All electrical connections
 └── software/
-    ├── requirements.txt
-    ├── setup.sh                   # Raspberry Pi setup script
-    ├── drone_controller.py        # Core DroneKit controller class
-    ├── waypoint_mission.py        # Autonomous waypoint missions
-    └── monitoring_dashboard.py    # Real-time telemetry display
+    ├── requirements.txt             # Python dependencies
+    ├── setup.sh                     # Raspberry Pi setup script
+    ├── drone_controller.py          # Core DroneKit controller class
+    ├── waypoint_mission.py          # Autonomous GPS waypoint missions
+    └── monitoring_dashboard.py      # Live terminal telemetry display
 ```
 
----
+### Software Architecture
 
-## Quick Start
+The Python code is organized around two main scripts:
 
-### 1. Hardware Assembly
+- **drone_controller.py**: A `DroneController` class that wraps DroneKit with clean methods for `arm()`, `takeoff(altitude)`, `goto(lat, lon, alt)`, `rtl()`, and `land()`. It also has a `get_telemetry()` method that returns a dictionary of all current vehicle state (GPS, battery, heading, speed, etc.).
 
-See the [Build Guide](docs/build-guide.md) for full step-by-step instructions. The [Bill of Materials](hardware/bill-of-materials.md) has the complete parts list.
+- **waypoint_mission.py**: Uploads a list of GPS waypoints to the flight controller as MAVLink commands (takeoff, navigate to each waypoint, then return to launch), switches to AUTO mode, and monitors progress until the mission completes.
 
-### 2. Flash and Configure Flight Controller
+- **monitoring_dashboard.py**: Connects over MAVLink and prints a live-updating terminal dashboard showing GPS position, altitude, heading, speed, battery voltage, and system status. Useful for keeping an eye on the drone during flights.
 
-Connect the Matek F405-Wing V2 via USB and flash ArduCopter V4.6.3 using QGroundControl or Mission Planner. Then load the parameter file:
+## Setup
 
-```
-config/arducopter-params.param
-```
+### 1. Build the Hardware
 
-See [Flight Controller Setup](docs/flight-controller-setup.md) for details.
+Follow the [Build Guide](docs/build-guide.md) for step-by-step assembly instructions. The [Wiring Guide](hardware/wiring-diagrams/wiring-guide.md) covers all electrical connections between the flight controller, ESC, GPS, and Raspberry Pi.
+
+### 2. Flash the Flight Controller
+
+1. Download [QGroundControl](http://qgroundcontrol.com/) on your Mac (or use Mission Planner on Windows)
+2. Connect the Matek F405-Wing V2 via USB
+3. Flash ArduCopter V4.6.3 firmware
+4. Load the parameter file: go to Config, then Full Parameter List, then Load from file, and select `config/arducopter-params.param`
+5. Reboot the flight controller
+
+The parameter file configures the frame type (Quad X), ESC protocol (DShot600), GPS on UART3, MAVLink on UART2 for the Raspberry Pi, battery monitoring with failsafe voltages, and arming checks.
+
+See [Flight Controller Setup](docs/flight-controller-setup.md) for a detailed walkthrough.
 
 ### 3. Calibrate Sensors
 
-Follow the [Calibration Guide](docs/calibration-guide.md):
-- Accelerometer (6-position)
-- Compass (outdoor, all orientations)
-- ESC throttle range
+Before flying, you must calibrate three things:
 
-### 4. Set Up Raspberry Pi
+1. **Accelerometer**: 6-position calibration (level, nose up, nose down, left side, right side, upside down)
+2. **Compass**: Outdoor calibration, rotating the drone through all orientations
+3. **ESC throttle range**: So the ESCs know the full stick range
+
+Follow the [Calibration Guide](docs/calibration-guide.md) for each procedure.
+
+### 4. Set Up the Raspberry Pi
+
+On the Raspberry Pi (running Raspberry Pi OS Lite):
 
 ```bash
-# Clone this repo on the Pi
 git clone https://github.com/rishith-c/Autonomous-Drone.git
 cd Autonomous-Drone
 
-# Run the setup script
 chmod +x software/setup.sh
 ./software/setup.sh
-
-# Or install manually
-pip3 install -r software/requirements.txt
 ```
 
-See [MAVLink Setup](docs/mavlink-setup.md) for UART wiring and configuration.
+The setup script updates the system, installs Python build tools, installs DroneKit and MAVProxy, and enables UART. After it finishes, you need to disable the serial login shell through `raspi-config` (Interface Options, then Serial Port, then set login shell to No and hardware enabled to Yes), then reboot.
 
-### 5. Test Connection
+See [MAVLink Setup](docs/mavlink-setup.md) for the UART wiring between the Pi and the flight controller.
 
-```python
+### 5. Test the Connection
+
+After the Pi is wired to the flight controller and both are powered on:
+
+```bash
+cd Autonomous-Drone
+python3 software/drone_controller.py
+```
+
+This connects over MAVLink and prints the current telemetry (GPS, battery, mode, etc.). If it works, you are ready to fly.
+
+### Using the Software from a Mac (Development and Simulation)
+
+You can develop and test the Python software on your Mac using the DroneKit SITL (Software In The Loop) simulator, which does not require any hardware:
+
+```bash
+# Clone the repo
+git clone https://github.com/rishith-c/Autonomous-Drone.git
+cd Autonomous-Drone
+
+# Create a virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r software/requirements.txt
+
+# Start a simulated drone
+dronekit-sitl copter --home=37.12345,-121.12345,0,0
+
+# In another terminal, test the controller
+python3 -c "
 from dronekit import connect
-
-vehicle = connect('/dev/ttyAMA0', wait_ready=True, baud=921600)
-print(f"GPS: {vehicle.gps_0}")
-print(f"Battery: {vehicle.battery}")
-print(f"Mode: {vehicle.mode.name}")
+vehicle = connect('tcp:127.0.0.1:5760', wait_ready=True)
+print(f'Mode: {vehicle.mode.name}')
+print(f'GPS: {vehicle.gps_0}')
 vehicle.close()
+"
 ```
 
-### 6. Fly a Mission
+### Running a Waypoint Mission
 
-```python
-from software.drone_controller import DroneController
+Edit the `WAYPOINTS` list in `software/waypoint_mission.py` with your GPS coordinates, then run:
 
-drone = DroneController()
-drone.arm()
-drone.takeoff(5)
-drone.goto(37.12345, -121.12345, 10)
-drone.rtl()
-drone.close()
+```bash
+python3 software/waypoint_mission.py
 ```
 
----
+The script uploads the mission (takeoff, waypoints, return to launch), arms the motors, switches to AUTO mode, and prints telemetry as the drone flies each waypoint.
 
-## System Architecture
+## Photos
 
-### Power Distribution
+<!-- Add photo: completed drone from above showing the quad X motor layout -->
+<!-- Add photo: electronics stack showing flight controller, ESC, GPS module, and Raspberry Pi -->
+<!-- Add photo: carbon fiber frame during assembly -->
+<!-- Add photo: wiring closeup between flight controller and ESC -->
+<!-- Add photo: terminal output from the monitoring dashboard during a flight -->
 
-```
-[3000mAh 4S LiPo 14.8V]
-         |
-    [XT60 Connector]
-         |
-    [Mamba F40 ESC]
-    /    |    |    \
-   M1   M2   M3   M4
-   |
-   [VBAT/GND to FC]
-   |
-[Matek F405-Wing V2]
-   |
-   [5V BEC to peripherals]
-   ├── GPS Module (5V)
-   ├── Raspberry Pi (separate 5V BEC or USB power bank)
-   └── Other peripherals
-```
+## Safety
 
-### Signal Flow
+Read [docs/safety.md](docs/safety.md) before flying. Key points:
 
-```
-[Matek FC - ArduCopter]
-   ├── ESC (Dshot600) --> Motors
-   ├── GPS Module (UART3, 115200 baud)
-   ├── Compass (I2C, integrated with GPS)
-   ├── Raspberry Pi (UART2, MAVLink, 921600 baud)
-   └── RC Receiver (optional, UART/SBUS)
-```
+- Always have a manual RC transmitter as backup (or a ground station with manual override)
+- Check battery failsafe voltages are set (14.0V low, 13.2V critical in the parameter file)
+- Calibrate sensors before every new flying location
+- Never fly over people
+- Start with low-altitude hover tests before attempting waypoint missions
 
-### Control Architecture
+## Future Plans
 
-```
-User / Mission Planner
-        |
-Raspberry Pi (Python / DroneKit)
-        | MAVLink commands
-Flight Controller (ArduCopter)
-        | Sensor fusion: GPS, IMU, Baro
-ESC (motor speed commands)
-        |
-4x Brushless Motors
-```
-
-### Motor Layout (Quad X)
-
-```
-        FRONT
-    M3 CCW    M1 CW
-        \    /
-         [FC]
-        /    \
-    M2 CW    M4 CCW
-
-M1: Front Right (CW)
-M2: Rear Left  (CW)
-M3: Front Left  (CCW)
-M4: Rear Right  (CCW)
-```
-
----
-
-## Documentation
-
-| Document | Description |
-|----------|-------------|
-| [Build Guide](docs/build-guide.md) | Complete assembly from start to finish |
-| [Hardware Specs](docs/hardware-specs.md) | Detailed specs for every component |
-| [Bill of Materials](hardware/bill-of-materials.md) | Full parts list with costs |
-| [Wiring Guide](hardware/wiring-diagrams/wiring-guide.md) | All wiring connections |
-| [Frame Assembly](hardware/frame/frame-assembly.md) | Frame construction |
-| [Flight Controller Setup](docs/flight-controller-setup.md) | ArduCopter parameters |
-| [MAVLink Setup](docs/mavlink-setup.md) | Raspberry Pi integration |
-| [Calibration Guide](docs/calibration-guide.md) | Sensor calibration |
-| [Troubleshooting](docs/troubleshooting.md) | Common problems and solutions |
-| [Safety](docs/safety.md) | Safety protocols and checklists |
-
----
-
-## Future Enhancements
-
-**Short Term (1-3 months)**
 - FPV camera for first-person view
-- RC receiver for manual backup
+- RC receiver for manual backup control
 - Obstacle avoidance sensors
-- Telemetry radio for longer range
-
-**Medium Term (3-6 months)**
-- Computer vision with OpenCV
-- Object tracking and following
-- Precision landing using visual markers
-- Advanced path planning
-
-**Long Term (6+ months)**
-- Machine learning integration
-- Autonomous inspection missions
-- Multi-drone swarm coordination
-- Indoor flight with alternative positioning
-- Payload delivery system
-
----
+- Computer vision with OpenCV (object tracking, precision landing)
+- Multi-drone coordination
 
 ## Resources
 
@@ -288,8 +228,6 @@ M4: Rear Right  (CCW)
 - [Matek F405-Wing V2 Docs](http://www.mateksys.com/?portfolio=f405-wing-v2)
 - [QGroundControl](http://qgroundcontrol.com/)
 
----
-
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+MIT License. See [LICENSE](LICENSE).
