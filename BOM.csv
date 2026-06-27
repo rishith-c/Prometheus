@@ -1,0 +1,8 @@
+Item,Part / Model,Qty,Unit Price USD,Line Total USD,Rationale,Specs / Source
+Flight Controller (FC + power + GPS),Holybro Pixhawk 6C Standard Set,1,189.99,189.99,"STM32H743 DMAMUX allocates independent DMA per rotor output, clearing the F405 stream-exhaustion ceiling; dual IMUs feed EKF3 sensor redundancy.",STM32H743 480MHz; dual redundant IMUs; vibration isolation; PM06 + M9N + cable set included; ArduPilot/PX4. holybro.com
+Companion Computer,"Raspberry Pi Compute Module 4 (4GB, Wi-Fi, Lite)",1,55.00,55.00,Offloads MAVLink2 autonomy and onboard CV from the FMU; quad-A72/4GB headroom for inference; 3.3V UART maps direct to the TELEM PHY.,BCM2711 quad-core A72 @1.5GHz; 4GB LPDDR4; 802.11ac; microSD boot. pishop/canakit ~$55-65
+CM4 Carrier Board,PiTray Mini (compact CM4 carrier),1,15.00,15.00,Minimal-mass CM4 breakout exposing the PL011 UART and USB while shedding unused PCIe/Ethernet payload.,thepihut/pishop ~$15
+Companion Power,5V / 5A switching UBEC,1,9.99,9.99,Dedicated 5V rail decouples companion inrush transients from the FMU's regulated bus; 5A ceiling exceeds CM4 peak draw for brownout margin.,5V 5A; 2-6S input. Matek/generic ~$8-12
+Motors,SunnySky X2814 V3 900KV,4,29.99,119.96,900Kv seats 11-inch disc loading in the high-efficiency thrust band on 4S; large-diameter/low-pitch geometry favors hover endurance over top-end.,28mm stator; N48UH magnets; NMB bearings; 108g; rated 11x5.5-11x8 on 3-4S; 50A/680W max; adapter included. globerc/banggood ~$30
+Propellers,Gemfan 1147 11x4.7 (2x CW + 2x CCW),4,2.33,9.32,11x4.7 pitch-to-diameter matched to motor Kv to hold tip speed in the efficient regime and damp blade-pass coupling into the IMU.,11-inch x 4.7 pitch; fits X2814 adapter
+TOTAL,,,,399.26,,
