@@ -1,153 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Autonomous Drone hardware build log and technical overview.">
-    <title>Autonomous Drone Hardware Build</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <header class="site-header" aria-label="Primary">
-      <a class="brand" href="#top" aria-label="Autonomous Drone home">
-        <span class="brand-mark">||</span>
-        <span>Autonomous Drone</span>
-      </a>
-      <nav class="nav-links" aria-label="Sections">
-        <a href="#build">Build</a>
-        <a href="#electronics">Electronics</a>
-        <a href="#status">Status</a>
-      </nav>
-    </header>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prometheus - Autonomous GPS Quadcopter</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
 
-    <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <img src="docs/assets/build-progress/frame-dry-fit.jpg" alt="Dry-fit autonomous quadcopter frame with carbon-fiber arms and motor mounts.">
-        <div class="hero-content">
-          <p class="eyebrow">GPS quadcopter / MAVLink companion computer</p>
-          <h1 id="hero-title">Autonomous Drone Hardware Build</h1>
-          <p class="hero-copy">
-            A sub-$450 carbon-fiber quadcopter platform built around ArduCopter,
-            Raspberry Pi control, GPS navigation, and no-prop bench validation.
-          </p>
-          <div class="hero-actions" aria-label="Project actions">
-            <a class="button button-primary" href="https://github.com/rishith-c/autonomous-drone">View repo</a>
-            <a class="button button-secondary" href="#build">See build log</a>
-          </div>
-        </div>
-      </section>
+  <h1>Prometheus</h1>
+  <p class="sub">An autonomous GPS quadcopter that flies waypoint missions, holds position, and returns to launch on its own. Flown from a Raspberry Pi over MAVLink.</p>
 
-      <section class="stats" aria-label="Build metrics">
-        <article>
-          <span class="metric">450mm</span>
-          <span class="label">motor spacing</span>
-        </article>
-        <article>
-          <span class="metric">4S</span>
-          <span class="label">LiPo power</span>
-        </article>
-        <article>
-          <span class="metric">1.89:1</span>
-          <span class="label">target thrust ratio</span>
-        </article>
-        <article>
-          <span class="metric">MAVLink</span>
-          <span class="label">Pi to FC control</span>
-        </article>
-      </section>
+  <p><a href="https://github.com/rishith-c/Prometheus">View the project on GitHub</a></p>
 
-      <section id="build" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Build sequence</p>
-          <h2>From arm assemblies to a powered center stack.</h2>
-          <p>
-            Each stage is documented with real build photos so the mechanical
-            work, wiring, and bench checks are easy to audit.
-          </p>
-        </div>
+  <hr>
 
-        <div class="build-grid">
-          <article class="feature-card">
-            <img src="docs/assets/build-progress/arm-motor-assemblies.jpg" alt="Four carbon-fiber arm assemblies with yellow 3D-printed motor mounts and installed brushless motors.">
-            <div>
-              <span class="step">01</span>
-              <h3>Arm and motor assemblies</h3>
-              <p>Carbon-fiber arms use yellow 3D-printed mounts with the brushless motors installed before final frame fitment.</p>
-            </div>
-          </article>
+  <h2>Overview</h2>
+  <p>Prometheus is a 1.85 kg quadcopter I designed and built from scratch. The goal is a drone that can fly a set of GPS waypoints, hold its position, and come home by itself, with a Raspberry Pi running the mission code and talking to the flight controller over MAVLink. Everything needed to build and program it lives in the repo: hardware specs, wiring, the ArduCopter config, and the Python flight software.</p>
 
-          <article class="feature-card">
-            <img src="docs/assets/build-progress/center-hub-wiring.jpg" alt="Center hub with motor leads routed toward the electronics bay.">
-            <div>
-              <span class="step">02</span>
-              <h3>Center hub routing</h3>
-              <p>Motor phase leads are staged toward the middle of the frame before trimming, ESC connection, and strain relief.</p>
-            </div>
-          </article>
+  <h2>What it can do</h2>
+  <ul>
+    <li>GPS waypoint navigation using DroneKit-Python</li>
+    <li>MAVLink control from a Raspberry Pi 4 companion computer</li>
+    <li>GPS position hold and altitude hold</li>
+    <li>Automatic return-to-launch on low battery or lost signal</li>
+    <li>12 to 15 minutes of hover on a 3000mAh 4S pack</li>
+    <li>Ready for a computer vision payload later on</li>
+  </ul>
 
-          <article class="feature-card">
-            <img src="docs/assets/build-progress/companion-computer-stack.jpg" alt="Raspberry Pi, flight controller, GPS module, and wiring mounted on the drone center deck.">
-            <div>
-              <span class="step">03</span>
-              <h3>Companion computer deck</h3>
-              <p>The Raspberry Pi, Matek F405-Wing V2, and BN-880 GPS are staged together for GPS and MAVLink bench testing.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+  <h2>Where it's at</h2>
+  <p><b>Done:</b> ArduCopter 4.6.3 flashed, ESC and motors configured, GPS connected and tested, frame finalized, carbon-fiber arms built, ESC power wiring bench-tested.</p>
+  <p><b>In progress:</b> sensor calibrations, frame assembly, Raspberry Pi MAVLink integration, mounting the companion computer and GPS deck.</p>
+  <p><b>Next:</b> first test flight, autonomous mission testing, computer vision.</p>
 
-      <section id="electronics" class="section split-section">
-        <div class="media-panel">
-          <img src="docs/assets/build-progress/esc-power-wiring-bench-test.jpg" alt="ESC bench test with XT60 leads, bullet connectors, and LiPo checker.">
-        </div>
-        <div class="copy-panel">
-          <p class="eyebrow">Electronics validation</p>
-          <h2>Power checks before props ever go on.</h2>
-          <p>
-            The ESC and XT60 wiring are checked on the bench first. The layout
-            keeps motor bullets visible, battery polarity obvious, and LiPo
-            voltage readings available during early validation.
-          </p>
-          <ul class="check-list">
-            <li>VBAT and GND short check with a multimeter</li>
-            <li>Motor phase connectors labeled before rotation testing</li>
-            <li>Flight controller, GPS, and Pi powered without propellers</li>
-          </ul>
-          <a class="button button-primary" href="docs/assets/build-progress/powered-stack-test.mp4">Watch bench-test clip</a>
-        </div>
-      </section>
+  <h2>Flight performance</h2>
+  <table>
+    <tr><th>Spec</th><th>Value</th></tr>
+    <tr><td>Total weight</td><td>1.85 kg all-up</td></tr>
+    <tr><td>Thrust-to-weight</td><td>1.89 to 1</td></tr>
+    <tr><td>Hover flight time</td><td>12 to 15 minutes</td></tr>
+    <tr><td>Max thrust</td><td>3500 g (875 g per motor)</td></tr>
+    <tr><td>Frame size</td><td>450 mm diagonal</td></tr>
+    <tr><td>Propellers</td><td>11 x 7 inch</td></tr>
+    <tr><td>GPS accuracy</td><td>2 to 3 meters</td></tr>
+  </table>
 
-      <section id="status" class="section status-section">
-        <div class="section-heading narrow">
-          <p class="eyebrow">Current state</p>
-          <h2>Frame dry-fit is complete; calibration and MAVLink integration are next.</h2>
-        </div>
-        <div class="status-grid" aria-label="Project status">
-          <article class="status-card complete">
-            <span>Complete</span>
-            <h3>Frame layout</h3>
-            <p>Four-arm carbon frame, motor mounts, and center plate fitment are documented.</p>
-          </article>
-          <article class="status-card complete">
-            <span>Complete</span>
-            <h3>ESC bench wiring</h3>
-            <p>XT60 input, motor bullets, and early battery checks are validated.</p>
-          </article>
-          <article class="status-card active">
-            <span>In progress</span>
-            <h3>Companion stack</h3>
-            <p>Pi, flight controller, GPS, and jumper wiring are mounted for MAVLink testing.</p>
-          </article>
-          <article class="status-card">
-            <span>Next</span>
-            <h3>Calibration</h3>
-            <p>Sensor calibration, motor direction checks, and first no-prop motor test.</p>
-          </article>
-        </div>
-      </section>
-    </main>
-  </body>
+  <h2>Core components</h2>
+  <table>
+    <tr><th>Part</th><th>Model</th></tr>
+    <tr><td>Flight controller</td><td>Matek F405-Wing V2</td></tr>
+    <tr><td>ESC</td><td>Diatone Mamba F40 4-in-1 (40A, DShot600)</td></tr>
+    <tr><td>Motors</td><td>D2830-12 brushless x4 (850 KV)</td></tr>
+    <tr><td>Battery</td><td>3000mAh 4S LiPo (14.8 V, 60C)</td></tr>
+    <tr><td>GPS</td><td>Beitian BN-880 (u-blox M8N and compass)</td></tr>
+    <tr><td>Companion computer</td><td>Raspberry Pi 4</td></tr>
+    <tr><td>Frame</td><td>Custom carbon fiber, 450 mm, 3D-printed motor mounts</td></tr>
+    <tr><td>Firmware</td><td>ArduCopter 4.6.3</td></tr>
+  </table>
+
+  <h2>How it's put together</h2>
+  <p>The Raspberry Pi runs the Python mission code and sends MAVLink commands to the Matek flight controller. The flight controller handles the sensor fusion from the GPS, IMU, and barometer, and drives the four motors through the ESC. On low battery or a lost link, it returns to launch on its own.</p>
+
+  <hr>
+  <p class="foot">Built by Rishith. MIT licensed. <a href="https://github.com/rishith-c/Prometheus">github.com/rishith-c/Prometheus</a></p>
+
+</div>
+</body>
 </html>

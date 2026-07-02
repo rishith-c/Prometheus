@@ -1,0 +1,3 @@
+dronekit
+pymavlink
+# dronekit-sitl   # optional, only needed to test in the simulator on a laptop
