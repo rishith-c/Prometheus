@@ -1,6 +1,5 @@
 # waypoint_mission.py
 # flies a small gps mission: arm, take off, hit each waypoint, come home.
-# EDIT the waypoints to real coords near you before running.
 # same warning as always: SITL first, props off for the first live test.
 
 from drone_controller import DroneController
