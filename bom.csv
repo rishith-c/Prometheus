@@ -1,0 +1,20 @@
+item,part,role,vendor,qty,unit_usd,line_total_usd,price_status,notes
+1,NVIDIA Jetson Orin Nano Super Developer Kit,Companion computer for onboard fire detection (67 TOPS),Arrow / SparkFun / Seeed (authorized only),1,249.00,249.00,verified MSRP,High demand. Amazon spot prices run above MSRP. Replaces Pi 4B with dead CSI port
+2,Holybro Pixhawk 6C (plastic case),Flight controller: redundant IMUs and vibration isolation,Holybro store,1,165.99,165.99,verified,Runs ArduCopter. See swap option below
+3,Holybro PM02 V3 power module,Power and voltage/current sensing for the 6C,Holybro store,1,25.00,25.00,estimate,Listed 20.89 to 28.49 depending on reseller
+4,MLX90640 thermal breakout 110 deg FOV,Thermal hotspot confirmation vs sunset/smoke false positives,Adafruit,1,60.00,60.00,verified approx,32x24 pixels. Confirms hotspots only. Not an imager
+5,Arducam IMX477 CSI camera,Main RGB detection camera on the Jetson,Arducam / Amazon,1,45.00,45.00,estimate,Confirm CSI cable type for Orin Nano carrier
+6,SiK telemetry radio pair,Long range GCS link enabling FS_GCS_ENABLE failsafe,Holybro / mRo,1,46.00,46.00,estimate,Check legal band (915 vs 433 MHz) for flight location
+7,3K carbon fiber sheet 2mm 400x500mm,Top plate and pod plates,Amazon (cncarbonfiber / ARJSTY) or GetFPV,1,45.00,45.00,estimate,Generic twill. Lumenier premium costs more
+8,3K carbon fiber sheet 3mm 200x300mm,Bottom plate,Amazon (cncarbonfiber / ARJSTY),1,35.00,35.00,estimate,
+9,CNC cutting service,Cutting plate profiles from the DXFs,local CNC / online service,1,80.00,80.00,estimate,CF dust is hazardous. Do not dry cut at home
+10,Carbon fiber tube 20mm OD 3K 500mm,Spare arms matching measured 20.0mm bore,Amazon / AliExpress,2,15.00,30.00,estimate,Caliper verify OD before ordering more
+11,M3 hardware kit + aluminum standoffs,Frame assembly,Amazon,1,25.00,25.00,estimate,M3x30 x16 hub clamp. M3x25 x8 pod clamps. M3x8 motors
+12,XT60 leads + LC filter + wiring,Jetson powered direct from 4S (carrier accepts 7 to 20V),Amazon / hobby shop,1,25.00,25.00,estimate,4S is 14.8 to 16.8V. Add inline fuse
+13,Props 11x4.7 (pair),Spares,Amazon / hobby shop,4,5.00,20.00,estimate,
+14,ASA filament 1kg,Printed pods legs and GPS mast. UV and heat stable,Amazon,1,25.00,25.00,estimate,PLA not acceptable for structural parts
+15,4S Li-ion 21700 pack ~8000mAh,Endurance pack roughly doubling survey time,CNHL / Upgrade Energy,1,70.00,70.00,estimate,Verify continuous current rating covers hover draw
+,,,,,,,,
+,TOTAL,,,,,946.00,,Remaining 54.00 reserved for shipping and import duties
+,,,,,,,,
+,SWAP OPTION,Drop items 2 and 3 (keep owned Matek H743-WLITE) and add FLIR Lepton 3.5 + PureThermal at ~240.00,GroupGets / Sparkfun,,,,,Net change +49. Real 160x120 thermal imaging instead of FC redundancy. Total ~995
