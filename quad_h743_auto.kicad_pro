@@ -1,0 +1,101 @@
+{
+  "board": {
+    "design_settings": {
+      "defaults": {}
+    }
+  },
+  "boards": [],
+  "cvpcb": {},
+  "erc": {},
+  "libraries": {
+    "pinned_footprint_libs": [],
+    "pinned_symbol_libs": []
+  },
+  "meta": {
+    "filename": "quad_h743_auto.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {},
+  "pcbnew": {},
+  "schematic": {
+    "annotate_start_num": 0,
+    "drawing": {
+      "default_line_thickness": 6.0,
+      "default_text_size": 50.0,
+      "field_names": [],
+      "intersheets_ref_own_page": false,
+      "intersheets_ref_prefix": "",
+      "intersheets_ref_short": false,
+      "intersheets_ref_show": false,
+      "intersheets_ref_suffix": "",
+      "junction_size_choice": 3,
+      "label_size_ratio": 0.25,
+      "pin_symbol_size": 0.0,
+      "text_offset_ratio": 0.08
+    },
+    "legacy_lib_dir": "",
+    "legacy_lib_list": [],
+    "meta": {
+      "version": 1
+    },
+    "net_format_name": "",
+    "ngspice": {
+      "fix_include_paths": true,
+      "fix_passive_vals": false,
+      "meta": {
+        "version": 0
+      },
+      "model_mode": 0,
+      "workbook_filename": ""
+    },
+    "page_layout_descr_file": "",
+    "plot_directory": "",
+    "spice_adjust_passive_values": false,
+    "spice_external_command": "spice \"%I\"",
+    "subpart_first_id": 65,
+    "subpart_id_separator": 0
+  },
+  "sheets": [
+    [
+      "90bec6b1-0d9d-4082-a826-fd97df3cc5b0",
+      ""
+    ],
+    [
+      "04840a86-2781-4f89-8e6e-ef303be501b3",
+      "mcu_core"
+    ],
+    [
+      "a4040c8b-3e56-4504-8d0c-564b3e606c72",
+      "power_input"
+    ],
+    [
+      "1787f585-c6aa-46f3-b38a-71f4326895b3",
+      "bucks_ldo"
+    ],
+    [
+      "0c2ce4e8-5e21-4754-abe6-64df8c032a76",
+      "imu"
+    ],
+    [
+      "e5d28b71-9680-4e85-9532-9734ffdaeae3",
+      "baro"
+    ],
+    [
+      "1d9835e7-072b-4e4c-b96b-e634935d3c19",
+      "microsd"
+    ],
+    [
+      "e5ebdd3e-2efc-47e6-9dcc-2f1874f7f1b6",
+      "usb_c"
+    ],
+    [
+      "502be4d9-950c-415d-a06b-aab365c6b3fd",
+      "can"
+    ],
+    [
+      "9c504ba2-589b-4efe-8763-15a765580b40",
+      "connectors"
+    ]
+  ],
+  "text_variables": {}
+}
