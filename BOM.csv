@@ -1,0 +1,24 @@
+item,part,quantity,unit_cost_usd,line_total_usd,status,purchase_url
+1,FPV F680 carbon fiber folding hexacopter frame,1,90.00,90.00,Buy,https://www.aliexpress.com/wholesale?SearchText=FPV+F680+Full+Carbon+Fiber+Hexacopter+Frame
+2,3508 380KV brushless motor,6,18.00,108.00,Buy,https://www.aliexpress.com/wholesale?SearchText=3508+380KV+brushless+motor
+3,40A 2-6S AM32 or BLHeli_32 ESC,6,12.00,72.00,Buy,https://www.aliexpress.com/wholesale?SearchText=40A+AM32+2-6S+ESC
+4,1255 CW CCW carbon-reinforced propeller pair,4,8.75,35.00,Buy,https://www.aliexpress.com/wholesale?SearchText=1255+carbon+fiber+propeller+CW+CCW
+5,BN-880 GPS compass module,1,0.00,0.00,Owned,https://www.banggood.com/search/bn-880-gps.html
+6,Matek PDB-HEX power distribution board,1,15.00,15.00,Buy,https://www.aliexpress.com/wholesale?SearchText=Matek+PDB-HEX
+7,5V 5A UBEC,1,20.00,20.00,Buy,https://www.aliexpress.com/wholesale?SearchText=5V+5A+UBEC+6S
+8,RadioMaster Pocket ELRS with RP1 receiver,1,85.00,85.00,Buy,https://www.radiomasterrc.com/collections/tx/products/pocket-radio-controller-m2
+9,6S 6000mAh 25C LiPo battery,1,90.00,90.00,Buy,https://www.amazon.com/s?k=6S+6000mAh+25C+LiPo+XT60
+10,6S 5A balance charger,1,65.00,65.00,Buy,https://www.amazon.com/s?k=6S+balance+charger+5A
+11,Intel RealSense D415 used or refurbished,1,80.00,80.00,Used/refurbished,https://www.ebay.com/sch/i.html?_nkw=Intel+RealSense+D415+used
+12,MLX90640 thermal breakout board,1,65.00,65.00,Buy,https://www.adafruit.com/product/4407
+13,1080p USB UVC camera,1,20.00,20.00,Buy,https://www.amazon.com/s?k=1080p+USB+UVC+camera
+14,Raspberry Pi 4B,1,0.00,0.00,Owned,https://www.raspberrypi.com/products/raspberry-pi-4-model-b/
+15,12AWG silicone wire XT60 bullet connector kit,1,55.00,55.00,Buy,https://www.amazon.com/s?k=12awg+silicone+wire+XT60+bullet+connector+kit
+16,Anti-vibration mount M3 standoff kit,1,20.00,20.00,Buy,https://www.amazon.com/s?k=drone+anti+vibration+mount+M3+standoff+kit
+17,High-endurance microSD cards,1,10.00,10.00,Buy,https://www.westerndigital.com/products/memory-cards/high-endurance-microsd
+18,5V buzzer and safety switch,1,7.00,7.00,Buy,https://www.amazon.com/s?k=5V+buzzer+safety+switch
+19,M3 hardware threadlocker prop adapter reserve,1,35.00,35.00,Buy,https://www.amazon.com/s?k=M3+nyloc+hardware+threadlocker+drone
+20,Shipping tax and price contingency,1,25.00,25.00,Reserve,
+21,Second 6S 6000mAh 25C LiPo battery,1,90.00,90.00,Buy,https://www.amazon.com/s?k=6S+6000mAh+25C+LiPo+XT60
+22,1255 CW CCW spare propeller pair,1,10.00,10.00,Buy,https://www.aliexpress.com/wholesale?SearchText=1255+carbon+fiber+propeller+CW+CCW
+TOTAL,Build total,,,997.00,Calculated,
